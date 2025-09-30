@@ -7,7 +7,9 @@ import com.thumbling.window.Window;
 import org.lwjgl.opengl.GL11;
 
 public class Main implements Runnable {
+    private FontRenderer fontConsolas;
     private final Window window;
+
     private MenuScreen menu;
 
     public Main() {
@@ -21,9 +23,8 @@ public class Main implements Runnable {
     @Override
     public void run() {
         window.init();
-
-        FontRenderer fontRenderer = new FontRenderer("fonts/Roboto-Regular.ttf");
-        menu = new MenuScreen(window.getHandle(), fontRenderer);
+        fontConsolas = new FontRenderer("fonts/consolas.png", 81, 9, 51, 94);
+        menu = new MenuScreen(window.getHandle(), this);
 
         int targetUPS = 60;
         int targetFPS = 60;
@@ -70,7 +71,7 @@ public class Main implements Runnable {
     }
 
     private void render() {
-        GL11.glClearColor(0f, 0f, 0f, 1f);
+        GL11.glClearColor(0f, 0f, 0f, 0f);
         GL11.glClear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_DEPTH_BUFFER_BIT);
 
         GL11.glMatrixMode(GL11.GL_PROJECTION);
@@ -80,5 +81,9 @@ public class Main implements Runnable {
         GL11.glLoadIdentity();
 
         menu.render();
+    }
+
+    public FontRenderer getFontConsolas() {
+        return fontConsolas;
     }
 }
